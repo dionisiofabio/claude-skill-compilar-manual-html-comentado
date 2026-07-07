@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+dist/
+build/
+_skill_build/
+*.skill
+node_modules/
+.chrome-profile/
+.env
+.env.*
+!.env.example
+*.env
+*.log

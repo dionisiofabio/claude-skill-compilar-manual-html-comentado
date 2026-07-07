@@ -1,0 +1,22 @@
+[
+  {"query": "compilei um curso de tráfego pago de 2022, mas muita coisa mudou. queria um manual navegável do conteúdo, só que com você apontando o que tá desatualizado e qual a prática de hoje", "should_trigger": true},
+  {"query": "tenho umas 30 transcrições de um curso de IA na pasta uploads. monta uma apostila HTML, mas não só copia não — complementa com os teus insights e corrige o que o professor ensinou errado", "should_trigger": true},
+  {"query": "faz um guia de consulta dessas aulas de Excel e vai comentando onde dá pra fazer melhor hoje em dia com as funções novas", "should_trigger": true},
+  {"query": "quero um material de estudo daquelas aulas de copywriting, com as tuas dicas e observações do que mudou no mercado por cima do que foi ensinado", "should_trigger": true},
+  {"query": "transforma essas transcrições do curso de prompt engineering num manual e adiciona notas suas atualizando pros modelos atuais", "should_trigger": true},
+  {"query": "monta um manual dessas aulas, mas anota igual um professor corrigindo a apostila, marcando o que ficou velho", "should_trigger": true},
+  {"query": "junta esses PDFs do treinamento de vendas num guia navegável e agrega o que a IA acha que dá pra melhorar e atualizar", "should_trigger": true},
+  {"query": "pega o curso de Canva que baixei e faz um manual, só que com uma camada tua de comentários e correções das melhores práticas atuais", "should_trigger": true},
+  {"query": "compila essas aulas de direito tributário num manual de referência e vai marcando onde a lei mudou desde a gravação", "should_trigger": true},
+  {"query": "quero o conteúdo do curso e a visão atualizada de vocês lado a lado, num HTML só de consulta", "should_trigger": true},
+  {"query": "compila essas transcrições num manual HTML navegável, fiel ao que foi ensinado, sem acrescentar nada de fora — só o que o professor falou", "should_trigger": false},
+  {"query": "tenho esse curso e não sei qual recorte usar pro manual. me traz umas opções de foco pra eu escolher antes de montar", "should_trigger": false},
+  {"query": "quais ângulos esse material comporta? quero ver os recortes possíveis antes de gerar a apostila HTML", "should_trigger": false},
+  {"query": "me dá um resumão em uns 3 parágrafos do que esse curso ensina, aqui no chat mesmo", "should_trigger": false},
+  {"query": "formata esse conteúdo num Word bonitão, com sumário e capa, pra eu mandar pro cliente", "should_trigger": false},
+  {"query": "redige uma contestação com base nesses documentos do processo", "should_trigger": false},
+  {"query": "arquiva essa landing page num HTML autossuficiente pra eu abrir offline depois que ela sair do ar", "should_trigger": false},
+  {"query": "baixa os vídeos e a transcrição desse curso da Hotmart pra mim", "should_trigger": false},
+  {"query": "pesquisa quais são as melhores práticas atuais de tráfego pago e me manda um relatório com fontes", "should_trigger": false},
+  {"query": "cria uns slides de apresentação resumindo esse treinamento de onboarding", "should_trigger": false}
+]

@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[TÍTULO DO MANUAL]</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* =========================================================================
+     TEMA — re-tematize por assunto AQUI. Estas variáveis controlam todas as
+     cores e larguras. Troque a paleta para fugir do "cara de IA" genérico
+     (creme + serifa + terracota). Mantenha contraste alto e 1 cor de acento.
+     Tokens de prompt (--term-*) controlam o bloco escuro estilo terminal.
+     ========================================================================= */
+  :root{
+    --paper:#F4F2EC;
+    --paper-2:#ECE9E0;
+    --paper-3:#E3DFD3;
+    --ink:#1B1915;
+    --ink-soft:#4C473D;
+    --ink-mute:#7A7264;
+    --line:#D7D1C3;
+    --line-strong:#C3BBA8;
+    --forest:#1B4332;
+    --forest-2:#2D6A4F;
+    --leaf:#3E8E68;
+    --brass:#9A7B27;
+    --brass-2:#BD9A3C;
+    --brick:#9A3B2E;
+    --term-bg:#15231C;
+    --term-bg-2:#1C2E25;
+    --term-ink:#E9E4D6;
+    --term-dim:#93A99C;
+    --term-rule:#C9A94A;
+    --maxw:880px;
+    --nav-w:312px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Newsreader",Georgia,serif;
+    font-size:18px;
+    line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--brass-2);color:#1b1500}
+
+  /* ---------- Layout ---------- */
+  .layout{display:flex;align-items:flex-start}
+  .nav{
+    width:var(--nav-w);
+    flex:0 0 var(--nav-w);
+    position:sticky;
+    top:0;
+    height:100vh;
+    overflow-y:auto;
+    background:var(--forest);
+    color:#E7EAE3;
+    padding:30px 22px 60px;
+    border-right:1px solid #143027;
+  }
+  .nav::-webkit-scrollbar{width:9px}
+  .nav::-webkit-scrollbar-thumb{background:#2c5444;border-radius:10px}
+  .main{
+    flex:1 1 auto;
+    min-width:0;
+    padding:0 clamp(20px,5vw,80px);
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:64px 0 120px}
+
+  /* ---------- Nav content ---------- */
+  .nav .brandmark{
+    font-family:"Space Grotesk",sans-serif;
+    font-weight:700;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    font-size:11px;
+    color:var(--brass-2);
+  }
+  .nav .brandtitle{
+    font-family:"Space Grotesk",sans-serif;
+    font-weight:600;
+    font-size:19px;
+    line-height:1.2;
+    margin:8px 0 26px;
+    color:#fff;
+  }
+  .nav .navgroup{
+    font-family:"Space Grotesk",sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.12em;
+    font-size:10.5px;
+    font-weight:600;
+    color:#8FB6A4;
+    margin:26px 0 9px;
+    padding-bottom:6px;
+    border-bottom:1px solid #2a5141;
+  }
+  .nav a{
+    display:block;
+    color:#D2D9D2;
+    text-decoration:none;
+    font-family:"Space Grotesk",sans-serif;
+    font-size:13.5px;
+    line-height:1.35;
+    padding:6px 10px;
+    border-radius:6px;
+    border-left:2px solid transparent;
+    transition:background .15s,color .15s,border-color .15s;
+  }
+  .nav a:hover{background:#22483a;color:#fff}
+  .nav a.sub{font-size:12.5px;padding-left:22px;color:#A9BFB4}
+  .nav a.active{background:#1f4234;color:#fff;border-left-color:var(--brass-2)}
+  .nav .navnote{
+    margin-top:34px;font-family:"Space Grotesk",sans-serif;
+    font-size:11px;color:#7FA593;line-height:1.5;
+    border-top:1px solid #2a5141;padding-top:14px;
+  }
+
+  /* mobile nav toggle */
+  .navtoggle{
+    display:none;position:fixed;z-index:60;top:14px;left:14px;
+    background:var(--forest);color:#fff;border:none;border-radius:9px;
+    width:46px;height:46px;font-size:20px;cursor:pointer;
+    box-shadow:0 6px 18px rgba(0,0,0,.25);
+  }
+  .scrim{display:none}
+
+  /* ---------- Hero ---------- */
+  .hero{padding:30px 0 18px;border-bottom:3px solid var(--ink);margin-bottom:6px}
+  .hero .eyebrow{
+    font-family:"Space Grotesk",sans-serif;text-transform:uppercase;
+    letter-spacing:.2em;font-size:12px;font-weight:600;color:var(--brass);
+    margin-bottom:18px;
+  }
+  .hero h1{
+    font-family:"Space Grotesk",sans-serif;
+    font-weight:700;
+    font-size:clamp(34px,6vw,58px);
+    line-height:1.02;
+    letter-spacing:-.015em;
+    margin:0 0 18px;
+    color:var(--ink);
+  }
+  .hero h1 em{font-style:normal;color:var(--forest-2)}
+  .hero .lede{
+    font-size:clamp(19px,2.4vw,22px);
+    color:var(--ink-soft);
+    max-width:62ch;
+    margin:0 0 22px;
+  }
+  .hero .meta{
+    font-family:"Space Grotesk",sans-serif;font-size:12.5px;
+    color:var(--ink-mute);letter-spacing:.02em;
+    display:flex;flex-wrap:wrap;gap:8px 22px;padding-top:4px;
+  }
+  .hero .meta b{color:var(--forest-2);font-weight:600}
+
+  /* ---------- Typography ---------- */
+  h2.sec{
+    font-family:"Space Grotesk",sans-serif;
+    font-weight:700;
+    font-size:clamp(26px,3.6vw,36px);
+    letter-spacing:-.01em;
+    line-height:1.08;
+    margin:0 0 6px;
+    color:var(--ink);
+  }
+  .secnum{
+    font-family:"JetBrains Mono",monospace;
+    font-size:13px;color:var(--brass);font-weight:600;
+    letter-spacing:.04em;display:block;margin-bottom:8px;
+  }
+  section.block{padding:70px 0 0;scroll-margin-top:24px}
+  section.block + section.block{border-top:1px solid var(--line)}
+  .sechead{margin-bottom:26px}
+  .sechead p.sub{font-size:18.5px;color:var(--ink-soft);margin:10px 0 0;max-width:64ch}
+
+  h3.topic{
+    font-family:"Space Grotesk",sans-serif;
+    font-weight:600;
+    font-size:23px;
+    line-height:1.18;
+    margin:52px 0 4px;
+    color:var(--forest);
+    scroll-margin-top:24px;
+  }
+  h3.topic .tnum{
+    font-family:"JetBrains Mono",monospace;font-size:13px;color:var(--brass);
+    font-weight:600;margin-right:10px;
+  }
+  h4.mini{
+    font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:16px;
+    text-transform:uppercase;letter-spacing:.08em;color:var(--ink-mute);
+    margin:30px 0 10px;
+  }
+  p{margin:0 0 16px}
+  a.inl{color:var(--forest-2);text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:1px}
+  strong{font-weight:600}
+  em.term{font-style:italic;color:var(--forest)}
+  .lead-in{font-size:20px;color:var(--ink-soft)}
+
+  ul.clean,ol.clean{margin:0 0 18px;padding-left:1.25em}
+  ul.clean li,ol.clean li{margin:0 0 9px}
+  ul.clean li::marker{color:var(--brass)}
+  ol.clean li::marker{color:var(--brass);font-family:"JetBrains Mono",monospace;font-weight:600}
+
+  /* ---------- Legend ---------- */
+  .legend{
+    background:var(--paper-2);border:1px solid var(--line);border-radius:14px;
+    padding:24px 26px;margin:6px 0 0;
+  }
+  .legend h4{margin:0 0 14px;font-family:"Space Grotesk",sans-serif;font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-mute)}
+  .legrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px 22px}
+  .legitem{display:flex;gap:12px;align-items:flex-start;font-size:15.5px;line-height:1.45}
+  .chip{
+    flex:0 0 auto;font-family:"Space Grotesk",sans-serif;font-size:10.5px;font-weight:600;
+    letter-spacing:.08em;text-transform:uppercase;padding:4px 9px;border-radius:6px;margin-top:2px;
+  }
+  .chip.prompt{background:var(--term-bg);color:var(--term-rule)}
+  .chip.skill{background:#e7f0ea;color:var(--forest);border:1px solid #bcd6c8}
+  .chip.app{background:#eee9da;color:var(--brass);border:1px solid #ddcfa3}
+  .chip.tip{background:#e9efe6;color:#41663a;border:1px solid #c5d8bd}
+  .chip.warn{background:#f3e3df;color:var(--brick);border:1px solid #e2bcb4}
+  .chip.flow{background:var(--forest);color:#fff}
+  .chip.ia{background:#efeafa;color:#5B4B8A;border:1px solid #d8cdf0}
+
+  /* ---------- Prompt block ---------- */
+  .prompt{
+    background:var(--term-bg);border-radius:12px;margin:22px 0;overflow:hidden;
+    border:1px solid #0f1c16;box-shadow:0 10px 26px rgba(20,40,30,.14);
+  }
+  .prompt .pbar{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    background:var(--term-bg-2);padding:9px 14px;border-bottom:1px solid #0f1c16;
+  }
+  .prompt .ptag{
+    font-family:"Space Grotesk",sans-serif;font-size:10.5px;font-weight:600;
+    letter-spacing:.13em;text-transform:uppercase;color:var(--term-rule);
+    display:flex;align-items:center;gap:9px;
+  }
+  .prompt .ptag .dot{width:8px;height:8px;border-radius:50%;background:var(--term-rule);display:inline-block}
+  .prompt .plabel{font-family:"Newsreader",serif;font-style:italic;color:var(--term-dim);font-size:13px;text-transform:none;letter-spacing:0;font-weight:400}
+  .copybtn{
+    font-family:"Space Grotesk",sans-serif;font-size:11px;font-weight:600;letter-spacing:.04em;
+    background:transparent;color:var(--term-dim);border:1px solid #3a5448;border-radius:6px;
+    padding:5px 11px;cursor:pointer;transition:all .15s;white-space:nowrap;
+  }
+  .copybtn:hover{color:#fff;border-color:var(--term-rule)}
+  .copybtn.done{color:var(--term-rule);border-color:var(--term-rule)}
+  .prompt pre{
+    margin:0;padding:18px 20px;color:var(--term-ink);
+    font-family:"JetBrains Mono",monospace;font-size:13.5px;line-height:1.6;
+    white-space:pre-wrap;word-wrap:break-word;tab-size:2;
+    border-left:3px solid var(--term-rule);
+  }
+  .prompt pre .ph{color:var(--term-rule);font-weight:500}
+
+  /* ---------- Callouts ---------- */
+  .callout{
+    border-radius:12px;padding:18px 20px 16px;margin:22px 0;
+    border:1px solid var(--line);background:var(--paper-2);position:relative;
+  }
+  .callout .clab{
+    font-family:"Space Grotesk",sans-serif;font-size:11px;font-weight:600;
+    letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:8px;
+  }
+  .callout p:last-child{margin-bottom:0}
+  .callout.skill{background:#eef4f0;border-color:#c4dccf;border-left:4px solid var(--forest-2)}
+  .callout.skill .clab{color:var(--forest)}
+  .callout.app{background:#f3eedf;border-color:#ddcfa3;border-left:4px solid var(--brass)}
+  .callout.app .clab{color:var(--brass)}
+  .callout.tip{background:#edf3e9;border-color:#c8dabe;border-left:4px solid var(--leaf)}
+  .callout.tip .clab{color:#3c6135}
+  .callout.warn{background:#f5e7e3;border-color:#e2bcb4;border-left:4px solid var(--brick)}
+  .callout.warn .clab{color:var(--brick)}
+  .callout code{font-family:"JetBrains Mono",monospace;font-size:.88em;background:rgba(0,0,0,.06);padding:1px 5px;border-radius:4px}
+
+  /* ---------- Apontamentos da IA (camada de comentário) ----------
+     Cor VIOLETA exclusiva desta camada. O leitor deve enxergar de longe
+     que este bloco NÃO é fala do curso — é acréscimo/insight/atualização/
+     correção feito pela IA. Nunca reaproveite estas cores em blocos de fonte. */
+  :root{
+    --ia:#5B4B8A;         /* violeta base — assinatura da camada IA */
+    --ia-2:#7A67B8;
+    --ia-soft:#efeafa;
+    --ia-line:#d8cdf0;
+    --ia-upd:#1F6F6B;     /* atualização — teal (algo mudou desde a aula) */
+    --ia-fix:#9A3B2E;     /* correção — vermelho-tijolo (a aula errou/imprecisou) */
+  }
+  .ianote{
+    background:var(--ia-soft);border:1px solid var(--ia-line);
+    border-left:4px solid var(--ia);border-radius:12px;
+    padding:16px 20px 14px;margin:22px 0;scroll-margin-top:24px;
+  }
+  .ianote .ihead{display:flex;align-items:center;gap:10px;margin-bottom:9px;flex-wrap:wrap}
+  .ianote .ibadge{
+    font-family:"Space Grotesk",sans-serif;font-size:10px;font-weight:700;
+    letter-spacing:.14em;text-transform:uppercase;background:var(--ia);color:#fff;
+    padding:3px 10px;border-radius:20px;display:inline-flex;align-items:center;gap:6px;
+  }
+  .ianote .ilab{
+    font-family:"Space Grotesk",sans-serif;font-size:11px;font-weight:600;
+    letter-spacing:.09em;text-transform:uppercase;color:var(--ia);
+  }
+  .ianote p{margin:0 0 12px}
+  .ianote p:last-child{margin-bottom:0}
+  .ianote .isrc{
+    font-family:"Space Grotesk",sans-serif;font-size:12px;color:var(--ink-mute);
+    line-height:1.5;margin-top:11px;padding-top:9px;border-top:1px dashed var(--ia-line);
+  }
+  .ianote .isrc a{color:var(--ia-2);text-underline-offset:2px}
+  /* subtipos: trocam o acento/rótulo mantendo a família violeta = "é da IA" */
+  .ianote.atualizacao{border-left-color:var(--ia-upd)}
+  .ianote.atualizacao .ibadge{background:var(--ia-upd)}
+  .ianote.atualizacao .ilab{color:var(--ia-upd)}
+  .ianote.correcao{border-left-color:var(--ia-fix)}
+  .ianote.correcao .ibadge{background:var(--ia-fix)}
+  .ianote.correcao .ilab{color:var(--ia-fix)}
+  /* marca "o curso ensina / hoje / correto" dentro do apontamento */
+  .ianote .was{color:var(--ink-soft)}
+  .ianote .now{color:var(--ink);font-weight:600}
+
+  /* inline app tag */
+  .apptag{
+    display:inline-block;font-family:"Space Grotesk",sans-serif;font-size:11px;font-weight:600;
+    letter-spacing:.04em;background:#efe9da;color:var(--brass);border:1px solid #ddcfa3;
+    padding:2px 8px;border-radius:6px;margin:0 2px;white-space:nowrap;
+  }
+  .skilltag{
+    display:inline-block;font-family:"JetBrains Mono",monospace;font-size:12px;
+    background:#e7f0ea;color:var(--forest);border:1px solid #bcd6c8;
+    padding:1px 7px;border-radius:5px;white-space:nowrap;
+  }
+
+  /* ---------- Pipeline (step by step) ---------- */
+  .pipe{margin:24px 0 8px;position:relative;padding-left:6px}
+  .step{position:relative;padding:0 0 26px 56px}
+  .step:last-child{padding-bottom:0}
+  .step::before{
+    content:"";position:absolute;left:17px;top:30px;bottom:-2px;width:2px;background:var(--line-strong);
+  }
+  .step:last-child::before{display:none}
+  .step .snum{
+    position:absolute;left:0;top:0;width:36px;height:36px;border-radius:50%;
+    background:var(--forest);color:#fff;font-family:"Space Grotesk",sans-serif;font-weight:600;
+    font-size:15px;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 0 0 5px var(--paper);
+  }
+  .step h5{
+    font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:17px;margin:5px 0 6px;color:var(--ink);line-height:1.25;
+  }
+  .step p{margin:0 0 10px;font-size:16.5px}
+  .step .meta{font-family:"Space Grotesk",sans-serif;font-size:12.5px;color:var(--ink-mute)}
+
+  /* ---------- Tool cards ---------- */
+  .tools{display:grid;grid-template-columns:repeat(auto-fill,minmax(248px,1fr));gap:16px;margin:24px 0 8px}
+  .tool{
+    border:1px solid var(--line);border-radius:12px;padding:16px 18px;background:var(--paper-2);
+    display:flex;flex-direction:column;
+  }
+  .tool .tname{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:16px;color:var(--forest);margin:0 0 2px}
+  .tool .trole{font-family:"Space Grotesk",sans-serif;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--brass);margin-bottom:9px}
+  .tool p{font-size:14.5px;line-height:1.45;margin:0;color:var(--ink-soft)}
+  .toolsec-label{
+    font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:13px;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--ink-mute);margin:34px 0 4px;
+  }
+
+  /* ---------- Tables ---------- */
+  .tbl{width:100%;border-collapse:collapse;margin:22px 0;font-size:15.5px}
+  .tbl th{
+    text-align:left;font-family:"Space Grotesk",sans-serif;font-size:11px;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--ink-mute);font-weight:600;padding:8px 12px;border-bottom:2px solid var(--line-strong);
+  }
+  .tbl td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.4}
+  .tbl tr:hover td{background:var(--paper-2)}
+  .tbl td b{color:var(--forest)}
+
+  /* ---------- Index lists ---------- */
+  .idx{margin:22px 0}
+  .idx .idxrow{
+    display:flex;gap:14px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--line);
+  }
+  .idx .idxrow a{
+    font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:15.5px;color:var(--forest);
+    text-decoration:none;flex:0 0 auto;
+  }
+  .idx .idxrow a:hover{text-decoration:underline}
+  .idx .idxrow .idxdesc{color:var(--ink-soft);font-size:15.5px}
+  .idx .idxrow .idxloc{margin-left:auto;font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--ink-mute);white-space:nowrap}
+
+  /* glossary */
+  .gloss dt{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:16.5px;color:var(--forest);margin:20px 0 3px}
+  .gloss dd{margin:0;color:var(--ink-soft);font-size:16.5px;line-height:1.5}
+
+  /* quote / key idea */
+  .keyidea{
+    border-left:4px solid var(--brass);background:var(--paper-2);padding:18px 22px;margin:24px 0;border-radius:0 12px 12px 0;
+  }
+  .keyidea p{margin:0;font-size:19px;font-style:italic;color:var(--ink)}
+  .keyidea .src{font-style:normal;font-family:"Space Grotesk",sans-serif;font-size:12px;color:var(--ink-mute);margin-top:8px;letter-spacing:.03em}
+
+  .divider-note{font-family:"Space Grotesk",sans-serif;font-size:12.5px;color:var(--ink-mute);letter-spacing:.03em;text-align:center;margin:40px 0;text-transform:uppercase}
+
+  /* footer */
+  .foot{border-top:3px solid var(--ink);margin-top:80px;padding:30px 0 0;color:var(--ink-mute);font-family:"Space Grotesk",sans-serif;font-size:13px;line-height:1.6}
+  .foot b{color:var(--forest)}
+
+  .back-to-top{
+    font-family:"Space Grotesk",sans-serif;font-size:12px;color:var(--ink-mute);
+    text-decoration:none;letter-spacing:.05em;display:inline-block;margin-top:8px;
+  }
+  .back-to-top:hover{color:var(--forest)}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:1080px){
+    :root{--nav-w:280px}
+  }
+  @media (max-width:860px){
+    body{font-size:17px}
+    .navtoggle{display:block}
+    .nav{
+      position:fixed;left:0;top:0;z-index:55;transform:translateX(-100%);
+      transition:transform .25s ease;box-shadow:0 0 40px rgba(0,0,0,.3);
+    }
+    body.navopen .nav{transform:translateX(0)}
+    body.navopen .scrim{display:block;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:50}
+    .main{padding:0 22px}
+    .wrap{padding:70px 0 90px}
+    .tools{grid-template-columns:1fr}
+    .idx .idxrow{flex-wrap:wrap}
+    .idx .idxrow .idxloc{margin-left:0;width:100%}
+  }
+  @media print{
+    .nav,.navtoggle{display:none}
+    .main{padding:0}
+    .prompt{box-shadow:none}
+    body{font-size:12pt}
+  }
+</style>
+</head>
+<body>
+<button class="navtoggle" aria-label="Abrir índice" onclick="document.body.classList.toggle('navopen')">☰</button>
+<div class="scrim" onclick="document.body.classList.remove('navopen')"></div>
+
+<div class="layout">
+<!-- ===================== SIDEBAR ===================== -->
+<nav class="nav" id="toc">
+  <div class="brandmark">[RÓTULO CURTO · ex.: Compêndio Operacional]</div>
+  <div class="brandtitle">[TÍTULO]<br>[Subtítulo do manual]</div>
+
+  <!-- REGRA: um .navgroup por TÓPICO. Use <a> simples para seções de 1º nível e
+       <a class="sub"> para subseções numeradas (A.1, A.2...). href = #id da seção.
+       Os ids do menu DEVEM bater exatamente com os ids das <section>. -->
+  <div class="navgroup">Fundamentos</div>
+  <a href="#inicio">Abertura</a>
+  <a href="#como-usar">Como usar este manual</a>
+  <a href="#ferramentas">Mapa de ferramentas</a>
+
+  <div class="navgroup">A · [Nome do Tópico A]</div>
+  <a class="sub" href="#a1-xxx">A.1 [Subtópico]</a>
+  <a class="sub" href="#a2-xxx">A.2 [Subtópico]</a>
+  <!-- ...A.3, A.4... -->
+
+  <div class="navgroup">B · [Nome do Tópico B]</div>
+  <a class="sub" href="#b1-xxx">B.1 [Subtópico]</a>
+  <!-- ...repita para C, D conforme necessário... -->
+
+  <div class="navgroup">Referência</div>
+  <a href="#glossario">Glossário</a>
+  <a href="#sumario-tematico">Sumário temático</a>
+  <a href="#sumario-prompts">Sumário de prompts</a>
+  <a href="#apontamentos">Índice de apontamentos da IA</a>
+
+  <div class="navnote">[Nota do menu: origem do material e <b style="color:#cdb866">recorte</b> aplicado.]</div>
+</nav>
+
+<!-- ===================== MAIN ===================== -->
+<main class="main">
+<div class="wrap">
+
+<!-- ===== HERO ===== -->
+<!-- ===== HERO / CAPA ===== -->
+<header class="hero" id="inicio">
+  <div class="eyebrow">[Sobrelinha · categoria do material]</div>
+  <h1>[Título de impacto, com <em>uma palavra em destaque</em>.]</h1>
+  <p class="lede">[Promessa do manual em 1–2 frases: o que reúne e para que serve, sem rodeios.]</p>
+  <div class="meta">
+    <span><b>Fonte:</b> [origem do material]</span>
+    <span><b>Recorte:</b> [o filtro aplicado]</span>
+    <span><b>Formato:</b> consulta rápida</span>
+  </div>
+</header>
+
+<!-- =========================================================================
+     SEÇÕES DE CONTEÚDO
+     Uma <section class="block" id="..."> por bloco. Comece pelos fundamentos
+     (#como-usar, #ferramentas), depois os TÓPICOS (A, B, C, D), e termine com
+     #glossario, #sumario-tematico e #sumario-prompts.
+     Os componentes prontos (callout, prompt, pipeline, tool cards, tabela,
+     keyidea, índices, glossário) estão em references/componentes.md — copie de lá.
+     ========================================================================= -->
+
+<!-- ===== exemplo mínimo de seção (troque pelo conteúdo real) ===== -->
+<section class="block" id="como-usar">
+  <div class="sechead">
+    <span class="secnum">00 — ORIENTAÇÃO</span>
+    <h2 class="sec">Como usar este manual</h2>
+    <p class="sub">[Explique a legenda de cores dos blocos e 2–3 regras de leitura.]</p>
+  </div>
+  <div class="keyidea"><p>[Uma frase-síntese que ancora o material inteiro.]</p><div class="src">[atribuição]</div></div>
+  <div class="callout tip"><div class="clab">Dica</div><p>[Texto da dica.]</p></div>
+</section>
+
+<!-- Acrescente: #ferramentas, os tópicos A/B/C/D, #glossario, #sumario-tematico, #sumario-prompts. -->
+
+<footer class="foot">
+  <p><b>[Título do manual]</b> — [origem e recorte do material em uma frase].</p>
+  <p>[Princípio/observação de uso — p.ex. revisão humana obrigatória, como personalizar os campos entre colchetes.]</p>
+  <a class="back-to-top" href="#inicio">↑ voltar ao topo</a>
+</footer>
+
+</div><!-- /.wrap -->
+</main><!-- /.main -->
+</div><!-- /.layout -->
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------- 1. Copiar prompts ---------- */
+  function copyText(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text);
+    }
+    return new Promise(function (resolve, reject) {
+      try {
+        var ta = document.createElement("textarea");
+        ta.value = text;
+        ta.setAttribute("readonly", "");
+        ta.style.position = "absolute";
+        ta.style.left = "-9999px";
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+        resolve();
+      } catch (e) {
+        reject(e);
+      }
+    });
+  }
+
+  document.querySelectorAll(".prompt").forEach(function (block) {
+    var btn = block.querySelector(".copybtn");
+    var pre = block.querySelector("pre");
+    if (!btn || !pre) return;
+    var original = btn.textContent;
+    btn.addEventListener("click", function () {
+      copyText(pre.innerText).then(function () {
+        btn.textContent = "copiado!";
+        btn.classList.add("done");
+        setTimeout(function () {
+          btn.textContent = original;
+          btn.classList.remove("done");
+        }, 1800);
+      }).catch(function () {
+        btn.textContent = "selecione e copie";
+        setTimeout(function () { btn.textContent = original; }, 2200);
+      });
+    });
+  });
+
+  /* ---------- 2. Scrollspy no índice ---------- */
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav a[href^="#"]'));
+  var linkFor = {};
+  navLinks.forEach(function (a) {
+    var id = a.getAttribute("href").slice(1);
+    if (id) linkFor[id] = a;
+  });
+
+  var targets = navLinks
+    .map(function (a) { return document.getElementById(a.getAttribute("href").slice(1)); })
+    .filter(Boolean);
+
+  function clearActive() {
+    navLinks.forEach(function (a) { a.classList.remove("active"); });
+  }
+
+  if ("IntersectionObserver" in window && targets.length) {
+    var visible = new Map();
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) visible.set(en.target.id, en.intersectionRatio);
+        else visible.delete(en.target.id);
+      });
+      var bestId = null, best = -1;
+      visible.forEach(function (ratio, id) {
+        if (ratio > best) { best = ratio; bestId = id; }
+      });
+      if (bestId && linkFor[bestId]) {
+        clearActive();
+        var link = linkFor[bestId];
+        link.classList.add("active");
+        // keep the active link in view inside the sidebar
+        if (link.scrollIntoView) {
+          var nav = document.querySelector(".nav");
+          if (nav) {
+            var lr = link.getBoundingClientRect();
+            var nr = nav.getBoundingClientRect();
+            if (lr.top < nr.top + 40 || lr.bottom > nr.bottom - 40) {
+              link.scrollIntoView({ block: "nearest" });
+            }
+          }
+        }
+      }
+    }, { rootMargin: "-12% 0px -80% 0px", threshold: [0, 0.25, 0.5, 1] });
+
+    targets.forEach(function (t) { obs.observe(t); });
+  }
+
+  /* ---------- 3. Fechar o índice ao clicar (mobile) ---------- */
+  document.querySelectorAll('.nav a[href^="#"]').forEach(function (a) {
+    a.addEventListener("click", function () {
+      document.body.classList.remove("navopen");
+    });
+  });
+})();
+</script>
+</body>
+</html>
